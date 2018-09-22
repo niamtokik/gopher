@@ -1,9 +1,14 @@
-gopher
-=====
+# gopher
 
-An OTP application
+Full Gopher Implementation in Erlang.
 
-Build
------
+## Build
 
     $ rebar3 compile
+
+## Test
+
+## Usage
+
+## Documentation
+
