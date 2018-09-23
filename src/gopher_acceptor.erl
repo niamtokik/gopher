@@ -23,7 +23,6 @@ init(Socket) ->
 loop(Socket) ->
     receive
 	{tcp, Port, Binary} -> 
-	    io:format("raw request: ~p~n", [Binary]),
 	    route(Port, Binary);
 	{tcp_closed, Port} -> 
 	    io:format("Closing connection from ~p~n",[Port]),
@@ -41,16 +40,10 @@ route(Socket, <<>>) ->
 route(Socket, <<"\r\n">>) ->
     gen_tcp:send(Socket,listing()),
     gen_tcp:close(Socket);
-route(Socket, <<Route/bitstring>>) ->
-    io:format("received: ~p~n", [Route]),
-    Clean = gopher_handler:clean_route(Route),
-    case gopher_handler:info(Clean) of
-	directory -> gopher_handler:directory(Socket, Clean);
-	file -> gopher_handler:file(Socket, Clean);
-	regular -> gopher_handler:file(Socket, Clean);
-	_Else -> io:format("got: ~p~p~n", [Clean, _Else])
-    end.
-
+route(Socket, <<>>
+route(Socket, Something) ->
+    io:format("received: ~p~n", [Something]),
+    loop(Socket).    
 
 -spec listing() -> iodata().
 listing() ->
